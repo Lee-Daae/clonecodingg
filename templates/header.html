@@ -1,11 +1,35 @@
 <div style="text-align: center;">
     <div>
+      <div>
         <h1 class="display-4 mb-4 font-lobster">Site Name</h1>
       </div>
       <div>
         <span class="mx-3 badge badge-primary">1</span>
         <span class="mx-3 badge badge-primary">2</span>
         <span class="mx-3 badge badge-primary">3</span>
-        <span class="mx-3 badge badge-primary">4</span>
+        {%if not user.is_authenticated%} <!-- 로그인이 되어 있지 않다면-->
+        <a href="{%url 'accountapp:login'%}?next={{request.path}}">
+          <span>login</span>
+        </a>        
+        <a href="{%url 'accountapp:create'%}">
+          <span>SignUp</span>
+        </a>       
+        {%else%}
+        <a href="{%url 'accountapp:detail' pk=user.pk%}">
+          <span>MyPage</span>
+        </a>
+        <!--
+        <a href="{%url 'accountapp:logout'%}?next={{request.path}}" method="post">
+          {% csrf_token %}
+          <span>logout</span>
+        </a>-->
+        <form action="{% url 'accountapp:logout' %}?next={{ request.path }}" method="post">
+          {% csrf_token %}
+          <button type="submit">
+            <span>logout</span>
+          </button>
+        </form>
+        {%endif%}
       </div>
+    </div>
 </div>
