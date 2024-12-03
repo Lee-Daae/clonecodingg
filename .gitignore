@@ -2,6 +2,8 @@ db.sqlite3
 
 __pycache__/
 
+media/
+
 ##Global/macOS.gitignore
 # General
 .DS_Store

@@ -1,24 +1,34 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, UpdateView
 
+from accountapp.decorators import account_owner_required
 from accountapp.forms import AccountUpdateForm
 from accountapp.models import HelloWorld
 
-# Create your views here.
+'''
+deco_arr = [account_owner_required, login_required] 장고 5.0 안됨?
+#https://docs.djangoproject.com/ko/5.0/_modules/django/utils/decorators/
+'''
+
+@login_required
 def hello_world(request):
     #return HttpResponse('Hello')
     #return render(request, 'base.html')
+
+    
     if request.method == "POST":
         temp = request.POST.get('hello_world_input')
         new = HelloWorld() # 모델
         new.text = temp
         new.save() # db에 저장됨
 
-        hello_world_list = HelloWorld.objects.all() # 모두 가져옴
+        #hello_world_list = HelloWorld.objects.all() # 모두 가져옴
 
         #return render(request, 'accountapp/hello_world.html', context={'text':temp})
         #return render(request, 'accountapp/hello_world.html', context={'hello_world_output':new})#객체 내보냄
@@ -42,14 +52,20 @@ class AccountDetailView(DetailView):
     context_object_name = 'target_user'
     template_name = 'accountapp/detail.html'
 
+@method_decorator(login_required, name='dispatch')
+@method_decorator(account_owner_required, name='dispatch')
 class AccountUpdateView(UpdateView):
     model = User
+    context_object_name = 'target_user'
     form_class = AccountUpdateForm
     success_url = reverse_lazy('accountapp:hello_world') 
     template_name = 'accountapp/update.html'
 
+@method_decorator(login_required, name='dispatch')
+@method_decorator(account_owner_required, name='dispatch')
 class AccountDeleteView(DetailView):
     model = User
+    context_object_name = 'target_user'
     success_url = reverse_lazy('accountapp:login')
     template_name = 'accountapp/delete.html'
 
