@@ -5,6 +5,10 @@ WORKDIR /home/
 RUN git clone https://github.com/Lee-Daae/clonecoding.git
 
 WORKDIR /home/pragmatic/
+# 필요한 기본 도구 설치
+RUN apt-get update && apt-get install -y curl
+# PDM 직접 설치
+RUN curl -sSL https://pdm-project.org/install-pdm.py | python3 -
 
 RUN pdm import requirements.txt 
 
