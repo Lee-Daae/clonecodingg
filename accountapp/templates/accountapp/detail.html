@@ -16,7 +16,7 @@
             <!--{{target_user.username}}-->
             {{target_user.profile.nickname}}
                 {%if target_user == user%}
-                <a href="{%url 'profileapp:update' pk=target_user.profile.pk%}">
+                <a clss="material-icons" href="{%url 'profileapp:update' pk=target_user.profile.pk%}">
                     edit
                 </a>
                 {%endif%}
@@ -40,17 +40,16 @@
         {%endif%}
 
         {%if target_user == user%}
-        <a href="{%url  'accountapp:update' pk=user.pk %}">
-            <p>
-                Change Info
-            </p>
+        <a clss="material-icons" href="{%url  'accountapp:update' pk=user.pk %}">
+                settings
         </a>
-        <a href="{%url  'accountapp:delete' pk=user.pk %}">
-            <p>
-                Quit(탈퇴)
-            </p>
+        <a clss="material-icons" href="{%url  'accountapp:delete' pk=user.pk %}">
+                cancel
         </a>
         {%endif%}
+    </div>
+    <div>
+        {% include 'snippets/list_fragment.html' with article_list=object_list %}
     </div>
 
 </div>

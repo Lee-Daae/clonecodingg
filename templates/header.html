@@ -1,36 +1,38 @@
-<div style="text-align: center;">
+<div style="text-align: center;"> <!-- class="pragmatic_header" -->
     <div>
       <div>
-        <h1 class="display-4 mb-4 font-lobster">Site Name</h1>
+        <h1 class="pragmatic_logo">Site Name</h1>
       </div>
       <div>
-        <a href="{% url 'articleapp:list' %}">
+        <a href="{% url 'articleapp:list' %}" class="pragmatic_header_nav">
           <span>Articles</span>
         </a>
-        <span class="mx-3 badge badge-primary">1</span>
-        <span class="mx-3 badge badge-primary">2</span>
+        <a href="{% url 'projectapp:list' %}" class="pragmatic_header_nav">
+          <span>Projects</span>
+        </a>
         <span class="mx-3 badge badge-primary">3</span>
         {%if not user.is_authenticated%} <!-- 로그인이 되어 있지 않다면-->
-        <a href="{%url 'accountapp:login'%}?next={{request.path}}">
+        <a href="{%url 'accountapp:login'%}?next={{request.path}}" class="pragmatic_header_nav">
           <span>login</span>
         </a>        
-        <a href="{%url 'accountapp:create'%}">
+        <a href="{%url 'accountapp:create'%}" class="pragmatic_header_nav">
           <span>SignUp</span>
         </a>       
         {%else%}
-        <a href="{%url 'accountapp:detail' pk=user.pk%}">
+        <a href="{%url 'accountapp:detail' pk=user.pk%}" class="pragmatic_header_nav">
           <span>MyPage</span>
         </a>
-        <!--
+
+        <!-- 추후 수정, Django의 LogoutView는 기본적으로 POST 방식을 요구하는데 아래와 같이 하면 <a> 태그는 항상 GET 요청만 가능하므로 오류나서 form 활용
         <a href="{%url 'accountapp:logout'%}?next={{request.path}}" method="post">
           {% csrf_token %}
           <span>logout</span>
         </a>-->
-        <form action="{% url 'accountapp:logout' %}?next={{ request.path }}" method="post">
-          {% csrf_token %}
-          <button type="submit">
-            <span>logout</span>
-          </button>
+        <a href="#" onclick="document.getElementById('logout-form').submit();" class="pragmatic_header_nav">
+          <span>logout</span>
+        </a>
+        <form id="logout-form" action="{% url 'accountapp:logout' %}?next={{ request.path }}" method="post" style="display: none;">
+            {% csrf_token %}
         </form>
         {%endif%}
       </div>

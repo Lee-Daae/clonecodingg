@@ -4,6 +4,8 @@ __pycache__/
 
 media/
 
+.env
+
 ##Global/macOS.gitignore
 # General
 .DS_Store
