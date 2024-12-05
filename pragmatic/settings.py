@@ -149,9 +149,13 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
-
+'''도커 오류
 STATICFILES_DIRS = [
     BASE_DIR / "static", # 앱에 종속되지 않은 파일
+]
+'''
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),  # 앱에 종속되지 않은 파일
 ]
 
 # Default primary key field type
