@@ -16,9 +16,9 @@ RUN pdm add gunicorn
 
 RUN echo "SECRET_KEY=django-insecure-ywc40v0ndy%srwmwoj0=3w^l1#%(v-@ferl89@33*_as@dd*h!" > .env
 
-RUN python manage.py migrate
+RUN pdm run python manage.py migrate
 
 EXPOSE 8000
 
-CMD ["gunicorn", "pragmatic.wsgi", "--bind", "0.0.0.0:8000"]
+CMD ["pdm", "run", "gunicorn", "pragmatic.wsgi", "--bind", "0.0.0.0:8000"]
 
