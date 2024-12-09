@@ -3,28 +3,28 @@
 {%block content%}
 
 <div>
-    <div style="text-align: center; max-width: 500px; margin: 4rem auto">
+    <div style="text-align: center; max-width: 500px; margin: 4rem auto;">
         <p>
             <!-- {{user.date_joined}} 다른 사람이 내 페이지로 왔을때 내 정보를 안보여주고 접속한 사람 정보 보여줌-->
             {{ target_user.date_joined }}
         </p>
-
         {%if target_user.profile%}
         <img src="{{target_user.profile.image.url}}" alt="" 
             style="height: 8rem; width: 8rem; border-radius: 10rem; margin-bottom: 2rem;">
         <h2>
             <!--{{target_user.username}}-->
             {{target_user.profile.nickname}}
-                {%if target_user == user%}
-                <a clss="material-icons" href="{%url 'profileapp:update' pk=target_user.profile.pk%}">
-                    edit
-                </a>
-                {%endif%}
+            {%if target_user == user%}
+            <a class="material-icons" href="{%url 'profileapp:update' pk=target_user.profile.pk%}">
+                edit
+            </a>
+            {%endif%}
         </h2>
         <!--대화명-->
         <h5 style="margin-bottom: 3rem;">
             {{target_user.profile.message}}
         </h5>
+        
         {%else%}
             {%if target_user.profile%}
             <a href="{%url 'profileapp:create'%}">
@@ -40,18 +40,16 @@
         {%endif%}
 
         {%if target_user == user%}
-        <a clss="material-icons" href="{%url  'accountapp:update' pk=user.pk %}">
+        <a class="material-icons" href="{%url  'accountapp:update' pk=user.pk %}">
                 settings
         </a>
-        <a clss="material-icons" href="{%url  'accountapp:delete' pk=user.pk %}">
+        <a class="material-icons" href="{%url  'accountapp:delete' pk=user.pk %}">
                 cancel
         </a>
         {%endif%}
     </div>
     <div>
-        {% include 'snippets/list_fragment.html' with article_list=object_list %}
+    	{% include 'snippets/list_fragment.html' with article_list=object_list %}
     </div>
-
 </div>
-
 {%endblock%}

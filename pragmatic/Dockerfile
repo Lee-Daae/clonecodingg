@@ -2,9 +2,11 @@ FROM python:3.13.0
 
 WORKDIR /home/
 
-RUN git clone https://github.com/Lee-Daae/clonecoding.git
+RUN echo "testing"
 
-WORKDIR /home/clonecoding/
+RUN git clone https://github.com/Lee-Daae/clonecodingg.git
+
+WORKDIR /home/clonecodingg/
 # 필요한 기본 도구 설치
 RUN apt-get update && apt-get install -y curl
 # PDM 직접 설치
@@ -16,11 +18,12 @@ RUN pdm import requirements.txt
 
 RUN pdm add gunicorn
 
-RUN echo "SECRET_KEY=django-insecure-ywc40v0ndy%srwmwoj0=3w^l1#%(v-@ferl89@33*_as@dd*h!" > .env
+RUN pdm add mysqlclient # 마리아 디비 쓰기위해 설치
 
-RUN pdm run python manage.py migrate
+#RUN echo "SECRET_KEY=django-insecure-ywc40v0ndy%srwmwoj0=3w^l1#%(v-@ferl89@33*_as@dd*h!" > .env
+
+#RUN pdm run python manage.py collectstatic
 
 EXPOSE 8000
 
-CMD ["pdm", "run", "gunicorn", "pragmatic.wsgi", "--bind", "0.0.0.0:8000"]
-
+CMD ["bash", "-c", "pdm run python manage.py collectstatic --noinput --settings=pragmatic.settings.deploy && python manage.py migrate --settings=pragmatic.settings.deploy && gunicorn pragmatic.wsgi --env DJANGO_SETTINGS_MODULE=pragmatic.settings.deploy --bind 0.0.0.0:8000"]

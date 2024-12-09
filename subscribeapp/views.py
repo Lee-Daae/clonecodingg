@@ -37,4 +37,5 @@ class SubscriptionListView(ListView):
 
     def get_queryset(self): # 가지고 오는 게시글들의 조건을 바꿀 수 있는 함수
         projects = Subscription.objects.filter(user=self.request.user).values_list("project") 
-        article_list = Article.objects.filter(project__in=projects) 
+        article_list = Article.objects.filter(project__in=projects)
+        return article_list

@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 from django.views.generic.list import MultipleObjectMixin
 
 from accountapp.decorators import account_owner_required
@@ -43,7 +43,7 @@ class AccountUpdateView(UpdateView):
 
 @method_decorator(login_required, name='dispatch')
 @method_decorator(account_owner_required, name='dispatch')
-class AccountDeleteView(DetailView):
+class AccountDeleteView(DeleteView):
     model = User
     context_object_name = 'target_user'
     success_url = reverse_lazy('accountapp:login')
