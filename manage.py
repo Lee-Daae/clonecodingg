@@ -5,7 +5,7 @@ import sys
 
 
 def main():
-    print('test')
+    print(os.environ['SECRET_KEY'])
     """Run administrative tasks."""
     #os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pragmatic.settings')
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pragmatic.settings.local')
