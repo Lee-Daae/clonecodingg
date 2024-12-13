@@ -15,8 +15,8 @@ services:
     networks:
       - network
     volumes:
-      - static-volume:/home/pragmatic/staticfiles
-      - media-volume:/home/pragmatic/media
+      - static-volume:/home/pinterest/staticfiles
+      - media-volume:/home/pinterest/media
     secrets:
       - MYSQL_PASSWORD
       - DJANGO_SECRET_KEY
@@ -34,6 +34,8 @@ services:
       MYSQL_USER: django
       MYSQL_PASSWORD_FILE: /run/secrets/MYSQL_PASSWORD
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/MYSQL_ROOT_PASSWORD
+    ports:
+      - 3306:3306
 
 networks:
   network:
