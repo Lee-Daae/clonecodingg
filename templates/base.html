@@ -4,6 +4,14 @@
 <body>
     {% include 'header.html' %}
     <hr>
+
+    {%for message in messages%}
+    <div class = "text-center">
+        <div>
+            {{message}}
+        </div>
+    </div>
+    {%endfor%}
     {%block content%}
 
     {%endblock%}
